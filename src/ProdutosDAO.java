@@ -23,12 +23,25 @@ public class ProdutosDAO {
     ArrayList<ProdutosDTO> listagem = new ArrayList<>();
     
     public void cadastrarProduto (ProdutosDTO produto){
-        
-        
-        //conn = new conectaDAO().connectDB();
-        
-        
+      String sql = "INSERT INTO leiloes (produto, valor, status) VALUES (?, ?, ?)";
+
+    Connection conn = new conectaDAO().connectDB();
+
+    try {
+        PreparedStatement pstm = conn.prepareStatement(sql);
+
+        pstm.setString(1, produto.getNome());
+        pstm.setInt(2, produto.getValor());
+        pstm.setString(3, produto.getStatus());
+
+        pstm.execute();
+
+        pstm.close();
+
+    } catch (Exception e) {
+        javax.swing.JOptionPane.showMessageDialog(null, "Erro ao cadastrar: " + e.getMessage());
     }
+   }
     
     public ArrayList<ProdutosDTO> listarProdutos(){
         
